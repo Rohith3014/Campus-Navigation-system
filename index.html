@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IMPACT HOME - Smart Voice Enabled Campus Navigation</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:url("https://www.targetadmission.com/storage/img/colleges/newc/5715-684088.webp");
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
+padding:20px;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+padding:20px;
+border-radius:20px;
+background:rgba(255,255,255,.15);
+backdrop-filter:blur(12px);
+box-shadow:0 0 20px rgba(0,0,0,.3);
+}
+
+.hidden{
+display:none;
+}
+
+h1,h2,h3,p{
+text-align:center;
+color:white;
+margin-bottom:12px;
+}
+
+#datetime{
+font-size:18px;
+font-weight:bold;
+margin-bottom:20px;
+}
+
+.search-container{
+position:relative;
+margin-bottom:20px;
+}
+
+.search-icon{
+position:absolute;
+left:12px;
+top:10px;
+width:28px;
+height:28px;
+border-radius:50%;
+}
+
+.search{
+width:100%;
+padding:14px 14px 14px 52px;
+border:none;
+outline:none;
+border-radius:40px;
+font-size:16px;
+background:rgba(255,255,255,.85);
+}
+
+#result{
+padding:15px;
+border-radius:12px;
+background:rgba(255,255,255,.18);
+margin-bottom:20px;
+color:white;
+}
+
+ul{
+list-style:none;
+margin-bottom:20px;
+}
+
+li{
+padding:12px;
+margin:8px 0;
+border-radius:10px;
+background:rgba(255,255,255,.18);
+color:white;
+cursor:pointer;
+}
+
+li:hover{
+transform:scale(1.02);
+}
+
+button{
+padding:12px 20px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+margin-top:10px;
+}
+
+.logout{
+width:100%;
+background:red;
+color:white;
+font-size:18px;
+}
+
+.stars span{
+font-size:40px;
+cursor:pointer;
+color:gold;
+}
+
+textarea{
+width:100%;
+height:120px;
+padding:15px;
+border:none;
+outline:none;
+border-radius:12px;
+background:rgba(255,255,255,.9);
+margin-top:10px;
+resize:none;
+}
+
+#feedbackList{
+margin-top:15px;
+max-height:220px;
+overflow:auto;
+padding:12px;
+border-radius:10px;
+background:rgba(255,255,255,.18);
+color:white;
+}
+
+.footer{
+margin-top:20px;
+padding:12px;
+text-align:center;
+font-size:18px;
+font-weight:bold;
+color:white;
+background:rgba(255,255,255,.18);
+border-radius:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container" id="mainPage">
+
+<h1>🏫 IMPACT HOME</h1>
+
+<p>Smart Voice Enabled Campus Navigation System</p>
+
+<div id="datetime"></div>
+
+<div class="search-container">
+
+<img class="search-icon"
+src="https://images.shiksha.com/mediadata/images/1588764172php6mDgA3.jpg">
+
+<input
+class="search"
+placeholder="Search Block / Room"
+onkeyup="searchItem(this.value)"
+>
+
+</div>
+
+<div id="result">
+Select a Block or Room
+</div>
+
+<h3>Blocks</h3>
+
+<ul>
+
+<li onclick="quickSelect('B1')">B1 – Robotics and Automation Block</li>
+<li onclick="quickSelect('B2')">B2 – Admission Office Block</li>
+<li onclick="quickSelect('B3')">B3 – Workshop Block</li>
+<li onclick="quickSelect('B4')">B4 – 2 Wheel Parking Block</li>
+<li onclick="quickSelect('B5')">B5 – Impact College Green Block</li>
+<li onclick="quickSelect('B6')">B6 – Girls Hostel Block</li>
+<li onclick="quickSelect('B7')">B7 – Hostel Canteen Block</li>
+<li onclick="quickSelect('B8')">B8 – Boys Hostel Block</li>
+<li onclick="quickSelect('B9')">B9 – Library Block</li>
+<li onclick="quickSelect('B10')">B10 – Ramanuja Hall Block</li>
+<li onclick="quickSelect('B11')">B11 – Visvesvaraya Hall Block</li>
+<li onclick="quickSelect('B12')">B12 – Sports Block</li>
+<li onclick="quickSelect('B13')">B13 – Back Gate</li>
+
+</ul>
+
+<h3>Rooms</h3>
+
+<ul>
+
+<li onclick="quickSelect('GF001')">GF001 – AIML Class Room</li>
+<li onclick="quickSelect('GF002')">GF002 – CSE Class Room</li>
+<li onclick="quickSelect('GF003')">GF003 – CD, CY Class Room</li>
+<li onclick="quickSelect('GF004')">GF004 – Robotics Class Room</li>
+<li onclick="quickSelect('GF005')">GF005 – IDT Lab</li>
+<li onclick="quickSelect('GF006')">GF006 – Seminar Hall</li>
+<li onclick="quickSelect('FF001')">FF001 – Principal Office</li>
+<li onclick="quickSelect('FF002')">FF002 – Account Department</li>
+<li onclick="quickSelect('FF003')">FF003 – Civil Staff Room</li>
+<li onclick="quickSelect('FF004')">FF004 – Mechanical Staff Room</li>
+<li onclick="quickSelect('FF005')">FF005 – Mechanical Lab</li>
+<li onclick="quickSelect('FF006')">FF006 – Civil Lab</li>
+<li onclick="quickSelect('SF001')">SF001 – Computer Science Staff Room</li>
+<li onclick="quickSelect('SF002')">SF002 – Computer Science Lab</li>
+<li onclick="quickSelect('TF001')">TF001 – Physics Lab</li>
+
+</ul>
+
+<button class="logout" onclick="logout()">
+Logout
+</button>
+
+</div>
+
+<div class="container hidden" id="thankYouPage">
+
+<h2>🙏 Thank You</h2>
+
+<div class="stars">
+<span onclick="rate(1)">★</span>
+<span onclick="rate(2)">★</span>
+<span onclick="rate(3)">★</span>
+<span onclick="rate(4)">★</span>
+<span onclick="rate(5)">★</span>
+</div>
+
+<p id="ratingMsg"></p>
+
+<h3>📝 Feedback / Report</h3>
+
+<textarea
+id="feedback"
+placeholder="Type feedback or report issue..."
+></textarea>
+
+<button onclick="saveFeedback()">
+Submit Feedback
+</button>
+
+<button onclick="showFeedback()">
+View Reports
+</button>
+
+<div id="feedbackList"></div>
+
+<div class="footer">
+⚡ Powered by IMPACT BOYS 👨🏻‍💻
+</div>
+
+<button onclick="goLogin()">
+Back To Login
+</button>
+
+</div>
+
+<script>
+
+const locations={
+B1:"Enter Gate 1 → After Admission Office → Near Impact Green Block",
+B2:"Right side of Gate 1",
+B3:"After Admission Office → Take right inside Architecture room",
+B4:"In front of Gate 2 → Opposite Boys Hostel",
+B5:"After Admission Office → Take right",
+B6:"Opposite Boys Hostel",
+B7:"Near Gate 2",
+B8:"After Canteen",
+B9:"Opposite Impact Green",
+B10:"Opposite Visvesvaraya Hall",
+B11:"Opposite Ramanuja Hall",
+B12:"Beside Seminar Hall",
+B13:"Beside Sports Block",
+
+GF001:"Ground Floor → First Room on the left",
+GF002:"Ground Floor → Second Room on the left",
+GF003:"Ground Floor → Third Room on the left",
+GF004:"Ground Floor → Fourth Room on the left",
+GF005:"Ground Floor → Fifth Room on the left",
+GF006:"Ground Floor → Last Room after IDT Lab",
+
+FF001:"First Floor → First Room on the right",
+FF002:"Opposite Principal Office",
+FF003:"First Floor → First Room on the left",
+FF004:"First Floor → Right side Last Room",
+FF005:"First Floor → Near Mechanical Staff Room",
+FF006:"First Floor → Near Civil Staff Room",
+
+SF001:"Second Floor → Right side Last Room",
+SF002:"Second Floor → Near Computer Science Staff Room",
+TF001:"Third Floor → First Room"
+};
+
+const distanceMap={
+B1:"120m",B2:"50m",B3:"180m",B4:"350m",B5:"160m",
+B6:"420m",B7:"390m",B8:"500m",B9:"220m",
+B10:"250m",B11:"270m",B12:"300m",B13:"600m",
+GF001:"20m",GF002:"30m",GF003:"40m",GF004:"50m",
+GF005:"60m",GF006:"70m",FF001:"100m",FF002:"110m",
+FF003:"120m",FF004:"130m",FF005:"140m",FF006:"150m",
+SF001:"220m",SF002:"240m",TF001:"300m"
+};
+
+function quickSelect(code){
+
+let route=locations[code];
+let dist=distanceMap[code];
+
+result.innerHTML=
+"<h2>"+code+"</h2><p>"+route+"</p><p>📍 Distance : "+dist+"</p>";
+
+speechSynthesis.cancel();
+
+let speech=new SpeechSynthesisUtterance(
+"Destination "+code+
+". Route "+route+
+". Distance "+dist
+);
+
+speechSynthesis.speak(speech);
+
+}
+
+function updateTime(){
+let now=new Date();
+datetime.innerHTML=
+"📅 "+now.toLocaleDateString()+
+" | ⏰ "+now.toLocaleTimeString();
+}
+
+setInterval(updateTime,1000);
+updateTime();
+
+function searchItem(value){
+
+document.querySelectorAll("li").forEach(item=>{
+
+item.style.display=
+item.innerText.toLowerCase()
+.includes(value.toLowerCase())
+?
+"block"
+:
+"none";
+
+});
+
+}
+
+function logout(){
+
+mainPage.classList.add("hidden");
+thankYouPage.classList.remove("hidden");
+showFeedback();
+
+}
+
+function rate(star){
+
+ratingMsg.innerHTML=
+"You Rated "+star+"/5 ⭐";
+
+}
+
+function saveFeedback(){
+
+let text=feedback.value.trim();
+
+if(text==="") return;
+
+let data=
+JSON.parse(
+localStorage.getItem("impactFeedback")
+)||[];
+
+data.push(text);
+
+localStorage.setItem(
+"impactFeedback",
+JSON.stringify(data)
+);
+
+feedback.value="";
+
+showFeedback();
+
+}
+
+function showFeedback(){
+
+let data=
+JSON.parse(
+localStorage.getItem("impactFeedback")
+)||[];
+
+let out="<h3>Reports / Feedback</h3>";
+
+data.forEach((x,i)=>{
+
+out += "<p>"+(i+1)+". "+x+"</p><hr>";
+
+});
+
+feedbackList.innerHTML=out;
+
+}
+
+function goLogin(){
+
+location.reload();
+
+}
+
+</script>
+
+</body>
+</html>
